@@ -38,6 +38,16 @@ class ToDoApp:
         self.mark_done_button = tk.Button(self.button_frame, text="Mark Done", width=10, command=self.mark_task_done)
         self.mark_done_button.pack(fill=tk.BOTH, expand=True, side=tk.LEFT)
 
+        # Aggiungi due pulsanti nel frame dei pulsanti:
+        self.show_all_button = tk.Button(self.button_frame, text="Show All", width=10, command=lambda: self.populate_tasks())
+        self.show_all_button.pack(fill=tk.BOTH, expand=True, side=tk.LEFT)
+        
+        self.show_done_button = tk.Button(self.button_frame, text="Show Done", width=10, command=lambda: self.filter_tasks(True))
+        self.show_done_button.pack(fill=tk.BOTH, expand=True, side=tk.LEFT)
+        
+        self.show_not_done_button = tk.Button(self.button_frame, text="Show Not Done", width=10, command=lambda: self.filter_tasks(False))
+        self.show_not_done_button.pack(fill=tk.BOTH, expand=True, side=tk.LEFT)
+
         self.populate_tasks()  # Popola la Listbox con le attività
 
     def add_task(self):
@@ -85,6 +95,17 @@ class ToDoApp:
     def populate_tasks(self):
         for task in self.tasks:
             self.task_listbox.insert(tk.END, self.get_display_text(task))
+
+    def filter_tasks(self, show_done):
+        self.task_listbox.delete(0, tk.END)
+        for task in self.tasks:
+            if task["done"] == show_done:
+                self.task_listbox.insert(tk.END, self.get_display_text(task))
+    
+    
+    
+    
+
 
 if __name__ == "__main__":
     root = tk.Tk()
